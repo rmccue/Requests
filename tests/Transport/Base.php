@@ -500,7 +500,7 @@ abstract class RequestsTest_Transport_Base extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException        Requests_Exception
-	 * @expectedExceptionMessage failed to open stream: No such file or directory
+	 * @expectedExceptionMessage failed to open stream
 	 */
 	public function testStreamToInvalidFile() {
 		$options = array(
