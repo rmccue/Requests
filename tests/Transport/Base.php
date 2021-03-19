@@ -530,6 +530,21 @@ abstract class RequestsTest_Transport_Base extends PHPUnit_Framework_TestCase {
 		unlink($options['filename']);
 	}
 
+	/**
+	 * @expectedException        Requests_Exception
+	 * @expectedExceptionMessage failed to open stream
+	 */
+	public function testStreamToInvalidFile() {
+		$options = array(
+			'filename' => tempnam(sys_get_temp_dir(), 'RLT').'/missing/directory' // RequestsLibraryTest
+		);
+		/*Assertions for PHPUnit 6+
+		$this->expectException(Requests_Exception::class);
+		$this->expectExceptionMessage('failed to open stream: No such file or directory');
+		*/
+		Requests::get(httpbin('/get'), array(), $this->getOptions($options));
+	}
+
 	public function testNonblocking() {
 		$options = array(
 			'blocking' => false,
