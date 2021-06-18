@@ -219,6 +219,21 @@ class Requests {
 		return new $class();
 	}
 
+	/**
+	 * Checks to see if we have a transport for the capabilities requested.
+	 *
+	 * @return bool
+	 */
+	public static function has_capability($capabilities = array()) {
+		try {
+			$transport = self::get_transport($capabilities);
+		} catch (Requests_Exception $e) {
+			return false;
+		}
+
+		return true;
+	}
+
 	/**#@+
 	 * @see request()
 	 * @param string $url
