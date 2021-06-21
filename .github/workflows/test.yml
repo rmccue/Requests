@@ -57,6 +57,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          ini-values: error_reporting=E_ALL, display_errors=On
           coverage: ${{ steps.set_cov.outputs.COV }}
           tools: cs2pr
 
