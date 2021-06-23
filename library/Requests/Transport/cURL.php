@@ -220,6 +220,10 @@ class Requests_Transport_cURL implements Requests_Transport {
 		do {
 			$active = 0;
 
+			if ($active) {
+				curl_multi_select($multihandle);
+			}
+
 			do {
 				$status = curl_multi_exec($multihandle, $active);
 			}
