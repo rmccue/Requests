@@ -889,4 +889,17 @@ abstract class RequestsTest_Transport_Base extends RequestsTest_TestCase {
 		$this->assertSame(httpbin('/post'), $result['url']);
 		$this->assertSame(array('test' => 'true', 'test2' => 'test'), $result['form']);
 	}
+
+	public function test303GETmethod() {
+		if ($this->skip_https) {
+			$this->markTestSkipped('SSL support is not available.');
+			return;
+		}
+
+		$data    = array('test' => 'true', 'test2' => 'test');
+		$request = Requests::post(httpbin('/status/303', true), array(), $data, $this->getOptions(array('follow_redirects' => true)));
+
+		$this->assertSame(200, $request->status_code);
+		$this->assertSame(httpbin('/get'), $request->url);
+	}
 }
