@@ -176,12 +176,14 @@ class Requests_Transport_cURL implements Requests_Transport {
 			$response = $this->response_data;
 		}
 
-		$this->process_response($response, $options);
+		if (true === $options['blocking']) {
+			// Need to remove the $this reference from the curl handle.
+			// Otherwise Requests_Transport_cURL wont be garbage collected and the curl_close() will never be called.
+			curl_setopt($this->handle, CURLOPT_HEADERFUNCTION, null);
+			curl_setopt($this->handle, CURLOPT_WRITEFUNCTION, null);
+		}
 
-		// Need to remove the $this reference from the curl handle.
-		// Otherwise Requests_Transport_cURL wont be garbage collected and the curl_close() will never be called.
-		curl_setopt($this->handle, CURLOPT_HEADERFUNCTION, null);
-		curl_setopt($this->handle, CURLOPT_WRITEFUNCTION, null);
+		$this->process_response($response, $options);
 
 		return $this->headers;
 	}
